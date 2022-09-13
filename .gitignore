@@ -1,0 +1,7 @@
+minio_data
+mongo_data
+redis_data
+
+.idea
+
+.vscode

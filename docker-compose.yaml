@@ -1,0 +1,45 @@
+###
+### Local infrastructure for quick start ### 
+###
+
+version: "3"
+services:
+  
+  redis:
+    container_name: "redis"
+    image: redis:alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    volumes:
+      - ./redis_data:/var/lib/redis
+      - ./redis_data:/data
+
+  mongodb:
+    container_name: "mongodb"
+    restart: always
+    image: mongo
+    ports:
+      - '27017:27017'
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=user
+      - MONGO_INITDB_ROOT_PASSWORD=user
+    volumes:
+      - ./mongo_data:/data/db
+
+  minio:
+    container_name: "minio"
+    image: quay.io/minio/minio
+    restart: always
+    ports:
+      - "9000:9000"
+      # HTTP management UI
+      - "9001:9001"
+    environment:
+      - MINIO_ROOT_USER=user
+      - MINIO_ROOT_PASSWORD=useruser
+    command: server /data --console-address ":9001"
+    volumes:
+      - ./minio_data:/data
+
+
